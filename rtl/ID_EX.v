@@ -6,7 +6,7 @@ input [5:0] funct,
 input [31:0] word,
 input [31:0] read_data1, read_data2,
 input [31:0] PC,
-input [1:0] ALUOp,
+input [3:0] ALUOp,
 input ALUSrc,Mem_Read,Mem_Write,PcSrc,Mem_to_Reg,Reg_Write,RegDst,
 input clk,
 input rst_n,
@@ -15,7 +15,7 @@ output [5:0] funct_ID_EX,
 output [31:0] word_ID_EX,
 output [31:0] read_data1_ID_EX, read_data2_ID_EX,
 output [31:0] PC_ID_EX,
-output [1:0] ALUOp_ID_EX,
+output [3:0] ALUOp_ID_EX,
 output ALUSrc_ID_EX,Mem_Read_ID_EX,Mem_Write_ID_EX,PcSrc_ID_EX,Mem_to_Reg_ID_EX,Reg_Write_ID_EX,RegDst_ID_EX);
 
 reg [4:0] rs1_r,rs2_r,rd_r;
@@ -23,7 +23,7 @@ reg [5:0] funct_r;
 reg [31:0] word_r;
 reg [31:0] read_data1_r, read_data2_r;
 reg [31:0] PC_r;
-reg [1:0] ALUOp_r;
+reg [3:0] ALUOp_r;
 reg ALUSrc_r,Mem_Read_r,Mem_Write_r,PcSrc_r,Mem_to_Reg_r,Reg_Write_r,RegDst_r;
 
 always@(posedge clk or negedge rst_n) begin 

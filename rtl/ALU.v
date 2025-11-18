@@ -19,6 +19,8 @@ always @(*) begin
             result = oprd1 | oprd2;
         4'b1100:
             result = ~(oprd1 | oprd2);
+        4'b1000:
+            result = oprd1 ^ oprd2;
         4'b0111:
             begin 
                 if ($signed(oprd1) < $signed(oprd2))result = 32'd1;
