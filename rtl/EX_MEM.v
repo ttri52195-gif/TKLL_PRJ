@@ -1,3 +1,7 @@
+
+/* verilator lint_off MULTITOP */
+
+
 `timescale 1ns / 1ps
 module EX_MEM(
 input Mem_Read_ID_EX,Mem_Write_ID_EX,PcSrc_ID_EX,
@@ -6,16 +10,16 @@ input [31:0] PC_Branch,
 input zero,
 input [31:0] result,
 input [31:0] Write_Data,
-input [4:0] rd_ID_EX,
+input [4:0]  rd_ID_EX_mux,
 input clk,
 input rst_n,
-output Mem_Read_EX_MEM,Mem_Write_EX_MEM,PcSrc_EX_MEM,
-output Mem_to_Reg_EX_MEM,Reg_Write_EX_MEM,
-output [31:0] PC_Branch_EX_MEM,
-output zero_EX_MEM,
-output [31:0] result_EX_MEM,
-output [31:0] Write_Data_EX_MEM,
-output [4:0] rd_EX_MEM);
+output wire Mem_Read_EX_MEM,Mem_Write_EX_MEM,PcSrc_EX_MEM,
+output wire Mem_to_Reg_EX_MEM,Reg_Write_EX_MEM,
+output wire [31:0] PC_Branch_EX_MEM,
+output wire zero_EX_MEM,
+output wire [31:0] result_EX_MEM,
+output wire[31:0] Write_Data_EX_MEM,
+output wire [4:0] rd_EX_MEM);
 
 reg Mem_Read_r,Mem_Write_r,PcSrc_r;
 reg Mem_to_Reg_r,Reg_Write_r;
@@ -49,18 +53,18 @@ always@(posedge clk or negedge rst_n) begin
         zero_r <= zero;
         result_r <= result;
         Write_Data_r <= Write_Data;
-        rd_ID_EX_r <= rd_ID_EX; 
+        rd_ID_EX_r <= rd_ID_EX_mux; 
     end
 end
 
-assign Mem_Read_EX_MEM = Mem_Read_r;
-assign Mem_Write_EX_MEM = Mem_Write_r;
-assign PcSrc_EX_MEM = PcSrc_r;
-assign Mem_to_Reg_EX_MEM = Mem_to_Reg_r;
-assign Reg_Write_EX_MEM = Reg_Write_r;
-assign PC_Branch_EX_MEM = PC_Branch_r;
-assign zero_EX_MEM = zero_r;
-assign result_EX_MEM = result_r;
-assign Write_Data_EX_MEM = Write_Data_r;
-assign rd_EX_MEM = rd_ID_EX_r;
+    assign Mem_Read_EX_MEM = Mem_Read_r;
+    assign Mem_Write_EX_MEM = Mem_Write_r;
+    assign PcSrc_EX_MEM = PcSrc_r;
+    assign Mem_to_Reg_EX_MEM = Mem_to_Reg_r;
+    assign Reg_Write_EX_MEM = Reg_Write_r;
+    assign PC_Branch_EX_MEM = PC_Branch_r;
+    assign zero_EX_MEM = zero_r;
+    assign result_EX_MEM = result_r;
+    assign Write_Data_EX_MEM = Write_Data_r;
+    assign rd_EX_MEM = rd_ID_EX_r;
 endmodule

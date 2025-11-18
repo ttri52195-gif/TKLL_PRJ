@@ -1,3 +1,5 @@
+/* verilator lint_off MULTITOP */
+
 `timescale 1ns / 1ps
 module ALU(
 input [31:0] oprd1,
@@ -5,7 +7,7 @@ input [31:0] oprd2,
 input [3:0] ALU_Operation,
 output reg zero,
 output reg [31:0] result
-    );
+ );
 
 always @(*) begin 
     case(ALU_Operation)

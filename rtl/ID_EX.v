@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
 
 module ID_EX(
-input [4:0] rs1,rs2,rd,
-input [5:0] funct,
+input [4:0] rs1_IF_ID,rs2_IF_ID,rd_IF_ID,
+input [5:0] funct_IF_ID,
 input [31:0] word,
 input [31:0] read_data1, read_data2,
-input [31:0] PC,
+input [31:0] Pc_4_IF_ID,
 input [3:0] ALUOp,
 input ALUSrc,Mem_Read,Mem_Write,PcSrc,Mem_to_Reg,Reg_Write,RegDst,
 input clk,
@@ -36,7 +36,7 @@ always@(posedge clk or negedge rst_n) begin
         read_data1_r <= 32'b0;
         read_data2_r <= 32'b0;
         PC_r <= 32'b0;
-        ALUOp_r <= 2'b0;
+        ALUOp_r <= 4'b0;
         ALUSrc_r <= 1'b0;
         Mem_Read_r <= 1'b0;
         Mem_Write_r <= 1'b0;
@@ -46,14 +46,14 @@ always@(posedge clk or negedge rst_n) begin
         RegDst_r <= 1'b0;    
     end
     else begin
-        rs1_r <= rs1;
-        rs2_r <= rs2;
-        rd_r <= rd;
-        funct_r <= funct;
+        rs1_r <= rs1_IF_ID;
+        rs2_r <= rs2_IF_ID;
+        rd_r <= rd_IF_ID;
+        funct_r <= funct_IF_ID;
         word_r <= word;
         read_data1_r <= read_data1;
         read_data2_r <= read_data2;
-        PC_r <= PC;
+        PC_r <= Pc_4_IF_ID;
         ALUOp_r <= ALUOp;
         ALUSrc_r <= ALUSrc;
         Mem_Read_r <= Mem_Read;

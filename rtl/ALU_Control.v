@@ -1,3 +1,5 @@
+/* verilator lint_off MULTITOP */
+
 `timescale 1ns / 1ps
 module ALU_Control(
 input [3:0] ALUOp,
