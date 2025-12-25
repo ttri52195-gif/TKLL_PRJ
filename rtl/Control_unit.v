@@ -1,6 +1,7 @@
+
 /* verilator lint_off MULTITOP */
 
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 
 module Control_unit( 
     input  wire [5:0] Opcode_IF_ID,
@@ -29,11 +30,8 @@ always@(*) begin
             Reg_Write  = 1;
             ALUSrc     = 0;
             ALUOp      = 4'b0010;
-       
- 
-
-
         end
+        
         // ---------------- LW ----------------
         6'b100011: begin
             RegDst     = 0;
@@ -41,14 +39,16 @@ always@(*) begin
             Mem_to_Reg = 1;
             Reg_Write  = 1;
             Mem_Read   = 1;
-            ALUOp      = 4'b0010;
+            ALUOp      = 4'b0000;
         end
+        
         // ---------------- SW ----------------
         6'b101011: begin
             ALUSrc     = 1;
             Mem_Write  = 1;
             ALUOp      = 4'b0000;
         end
+        
         // ---------------- BEQ ----------------
         6'b000100: begin
             PcSrc      = 1;
@@ -68,38 +68,39 @@ always@(*) begin
             ALUOp      = 4'b0000;   
         end
 
-        // ---------------- ANDI ----------------
+       // ---------------- ANDI ----------------
         6'b001100: begin  
             RegDst     = 0;
             Reg_Write  = 1;
             ALUSrc     = 1;
-            ALUOp      = 4'b0001;   
+            ALUOp      = 4'b0011;   
         end
    
-       
         // ---------------- ORI ----------------
         6'b001101: begin
             RegDst     = 0;
             Reg_Write  = 1;
             ALUSrc     = 1;
-            ALUOp      = 4'b0010;
+            ALUOp      = 4'b0100;
         end
 
-        // ---------------- SLT ----------------
+        // ---------------- XORI ----------------
         6'b001110: begin
             RegDst     = 0;
-            Reg_Write  = 0;
-            ALUSrc     = 0;
-            ALUOp      = 4'b0010;
+            Reg_Write  = 1;
+            ALUSrc     = 1;
+            ALUOp      = 4'b0101;
         end
-        //----------------SLTI-----------------
-         6'b001010 : begin
+
+        // ---------------- SLTI ----------------
+        6'b001010 : begin
             RegDst     = 0;
-            Reg_Write  = 0;
+            Reg_Write  = 1;  //
             ALUSrc     = 1;
             ALUOp      = 4'b0001;
         end
-        // ---------------- LUI ----------------
+
+        // ------------ /---- LUI ----------------
         6'b001111: begin
             RegDst     = 0;
             Reg_Write  = 1;

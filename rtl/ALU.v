@@ -1,12 +1,12 @@
 /* verilator lint_off MULTITOP */
 
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 module ALU(
-input [31:0] oprd1,
-input [31:0] oprd2,
-input [3:0] ALU_Operation,
-output reg zero,
-output reg [31:0] result
+    input [31:0] oprd1,
+    input [31:0] oprd2,
+    input [3:0] ALU_Operation,
+    output reg zero,
+    output reg [31:0] result
  );
 
 always @(*) begin 
@@ -28,9 +28,8 @@ always @(*) begin
                 if ($signed(oprd1) < $signed(oprd2))result = 32'd1;
                 else result = 32'd0;
             end
-        default: result = 32'bx;
     endcase
-    zero = (result == 32'b0);
+    zero = (result == 32'd0);
 end
 
 endmodule

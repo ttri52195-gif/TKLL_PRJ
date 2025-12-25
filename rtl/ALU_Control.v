@@ -1,6 +1,6 @@
 /* verilator lint_off MULTITOP */
 
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 module ALU_Control(
 input [3:0] ALUOp,
 input [5:0] funct,
@@ -24,11 +24,10 @@ output reg [3:0] ALU_Operation
                         6'b100101: ALU_Operation = 4'b0001; //OR
                         6'b101010: ALU_Operation = 4'b0111; // slt
                         6'b100110: ALU_Operation = 4'b1000; // XOR
-                        default: ALU_Operation = 4'bXXXX;
+                       default: ALU_Operation = 4'bXXXX;
                     endcase
                 
                 end
-            default: ALU_Operation = 4'bXXXX;
          endcase
     end
 endmodule

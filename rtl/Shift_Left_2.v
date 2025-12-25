@@ -1,10 +1,12 @@
 /* verilator lint_off MULTITOP */
 
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 
 module Shift_Left_2(
-input [31:0] inp,
-output [31:0] out);
+    input [31:0] inp,
+    output [31:0] out
+);
 
-assign out = (inp << 2);
+    assign out = (inp << 2);
+    
 endmodule

@@ -1,5 +1,5 @@
 /* verilator lint_off MULTITOP */
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 
 module Sign_extend(
         input  wire [15:0] Imediate_IF_ID,

@@ -1,5 +1,5 @@
 /* verilator lint_off MULTITOP */
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 
 module mux_3x1_32bit(
     input [31:0] data1,data2,data0,

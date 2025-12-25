@@ -1,9 +1,9 @@
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 
 module adder_32bit(
-    input [31:0] a,
-    input [31:0] b,
-    output [31:0] sum
+    input wire [31:0] a,
+    input wire [31:0] b,
+    output wire [31:0] sum
 );
     assign sum = a + b;
 endmodule

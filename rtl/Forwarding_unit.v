@@ -1,5 +1,5 @@
 /* verilator lint_off MULTITOP */
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 
 module Forwarding_unit(
    
@@ -12,19 +12,17 @@ module Forwarding_unit(
   always@(*)
   begin
 
-  if((Reg_Write_EX_MEM & rd_EX_MEM != 0 ) && (rd_EX_MEM == rs1_ID_EX))
-	  F1 = 2'b10;
-  else if ((Reg_Write_MEM_WB && rd_MEM_WB != 0) && (rd_MEM_WB == rs1_ID_EX))
-	  F1 = 2'b01;
+      if((Reg_Write_EX_MEM && rd_EX_MEM != 5'b0 ) && (rd_EX_MEM == rs1_ID_EX))
+        F1 = 2'b10;
+      else if ((Reg_Write_MEM_WB && rd_MEM_WB != 5'b0) && (rd_MEM_WB == rs1_ID_EX))
+        F1 = 2'b01;
+      else   F1 = 0;
 
-  else   F1 = 0;
-
-  if((Reg_Write_EX_MEM & rd_EX_MEM != 0 ) && (rd_EX_MEM == rs2_ID_EX))
-	  F2 = 2'b10;
-  else if ((Reg_Write_MEM_WB && rd_MEM_WB != 0) && (rd_MEM_WB == rs2_ID_EX))
-	  F2 = 2'b01;
-
-  else    F2 = 0;
+      if((Reg_Write_EX_MEM && rd_EX_MEM != 5'b0 ) && (rd_EX_MEM == rs2_ID_EX))
+        F2 = 2'b10;
+      else if ((Reg_Write_MEM_WB && rd_MEM_WB != 5'b0) && (rd_MEM_WB == rs2_ID_EX))
+        F2 = 2'b01;
+      else    F2 = 0;
   
   end
 endmodule
