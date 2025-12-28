@@ -5,7 +5,7 @@
 
 module Control_unit( 
     input  wire [5:0] Opcode_IF_ID,
-    output reg  RegDst, Reg_Write, ALUSrc, PcSrc, Mem_Write, Mem_to_Reg, Mem_Read, Jump,
+    output reg  RegDst, Reg_Write, ALUSrc, PcSrc, Mem_Write, Mem_to_Reg, Mem_Read, Jump,Extend_sel,
     output reg [3:0] ALUOp     
 );
 
@@ -21,7 +21,7 @@ always@(*) begin
     Mem_Read   = 0;
     Jump       = 0;
     ALUOp      = 4'b0000;
-
+    Extend_sel = 1;
     case (Opcode_IF_ID)
 
         // ---------------- R-type ----------------
@@ -30,6 +30,7 @@ always@(*) begin
             Reg_Write  = 1;
             ALUSrc     = 0;
             ALUOp      = 4'b0010;
+
         end
         
         // ---------------- LW ----------------
@@ -74,6 +75,7 @@ always@(*) begin
             Reg_Write  = 1;
             ALUSrc     = 1;
             ALUOp      = 4'b0011;   
+            Extend_sel = 0;
         end
    
         // ---------------- ORI ----------------
@@ -82,6 +84,7 @@ always@(*) begin
             Reg_Write  = 1;
             ALUSrc     = 1;
             ALUOp      = 4'b0100;
+            Extend_sel = 0;
         end
 
         // ---------------- XORI ----------------
@@ -90,6 +93,7 @@ always@(*) begin
             Reg_Write  = 1;
             ALUSrc     = 1;
             ALUOp      = 4'b0101;
+            Extend_sel = 0;
         end
 
         // ---------------- SLTI ----------------

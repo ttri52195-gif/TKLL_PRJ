@@ -3,8 +3,8 @@
 
 module Top(
     input wire clk, rst_n,
+  /* verilator lint_off UNUSED */
     input wire [4:0] add_R,
-    /* verilator lint_off UNDRIVEN */
     output wire [31:0] addr_M, data_M, data_R
 );
 
@@ -48,13 +48,12 @@ module Top(
     wire [31:0] result_EX_MEM;
     wire [31:0] Write_Data_EX_MEM;
     wire [4:0]  rd_EX_MEM;
-    wire stall;
     wire Mem_to_Reg_MEM_WB;
     wire [31:0] Read_Data_MEM_WB, Result_MEM_WB;
     wire [31:0] Read_Data;
     wire [31:0] out_mux_f2;
     wire [4:0]  rd_MEM_WB;
-    wire [31:0] Read_data;
+    wire Extend_sel;
     // --- BTB & PREDICTION WIRES ---
     wire BTB_Predict_Taken;           // BTB dự đoán tại IF
     wire [31:0] BTB_Predicted_Target; // Địa chỉ BTB dự đoán
@@ -152,7 +151,6 @@ module Top(
         
         .Predict_Taken_IF_ID(Predict_Taken_IF_ID),
         .Predict_Taken_ID_EX(Predict_Taken_ID_EX),
-        // Standard IO (Dùng liệt kê thay vì .* để tránh lỗi dư thừa)
         .rs1_IF_ID(rs1_IF_ID), .rs2_IF_ID(rs2_IF_ID), .rd_IF_ID(rd_IF_ID),
         .funct_IF_ID(funct_IF_ID), .word(word), 
         .read_data1(read_data1), .read_data2(read_data2),
@@ -174,7 +172,6 @@ module Top(
     ALU_Control ALU_Control_uut(.ALUOp(ALUOp_ID_EX),.funct(funct_ID_EX),.ALU_Operation(ALU_Operation));
     ALU ALU_uut(.*);
 
-    // --- [SỬA LỖI TÍNH ĐỊA CHỈ] Dùng module thay vì Shift/Adder thủ công ---
     ALU_Branch ALU_Branch_uut(
         .PC_ID_EX(PC_ID_EX),     // PC+4
         .Immediate(word_ID_EX),  // Offset
@@ -187,10 +184,8 @@ module Top(
     assign oprd2 = ALUSrc_ID_EX ? word_ID_EX : out_mux_f2;
     assign rd_ID_EX_mux = RegDst_ID_EX ? rd_ID_EX : rs2_ID_EX;
 
-    // --- EX_MEM: Đã XÓA cổng Pcsrc/Flush ở đây ---
     EX_MEM EX_MEM_uut(
         .clk(clk), .rst_n(rst_n),
-        // Không nối Miss_Prediction vào đây
         
         .PC_ID_EX(PC_ID_EX),    
         .Predict_Taken_ID_EX(Predict_Taken_ID_EX), 
@@ -230,6 +225,8 @@ module Top(
     mux_WB mux_WB_uut(.*);
     Hazard_detect Hazard_detect_uut(.*);
 
-    assign data_R = read_data1; 
-
+    assign data_R = Result_MEM_WB; 
+   
+    assign addr_M = result_EX_MEM;     
+    assign data_M = Write_Data_EX_MEM; 
 endmodule

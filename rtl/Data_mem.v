@@ -2,7 +2,7 @@
 `timescale 1ns / 1ns
 
 module Data_mem(
-  input wire clk,rst_n,	
+  input wire clk,
   input wire [31:0] result_EX_MEM,
   input wire [31:0] Write_Data_EX_MEM,
   input wire Mem_Write_EX_MEM, Mem_Read_EX_MEM,
@@ -15,7 +15,7 @@ module Data_mem(
      $readmemh("data.hex",mem);
    end
 
-   always@(posedge clk or negedge rst_n)
+   always@(posedge clk)
    begin
           
 	    if(Mem_Write_EX_MEM) mem[result_EX_MEM>>2] <= Write_Data_EX_MEM;

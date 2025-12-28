@@ -28,6 +28,7 @@ always @(*) begin
                 if ($signed(oprd1) < $signed(oprd2))result = 32'd1;
                 else result = 32'd0;
             end
+        default: result = 32'd0;
     endcase
     zero = (result == 32'd0);
 end

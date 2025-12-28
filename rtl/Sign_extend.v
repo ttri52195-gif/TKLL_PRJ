@@ -3,9 +3,10 @@
 
 module Sign_extend(
         input  wire [15:0] Imediate_IF_ID,
+        input  wire Extend_sel,
         output wire [31:0] word
 );
-
-        assign word = {{16{Imediate_IF_ID[15]}},Imediate_IF_ID};
+ 
+        assign word = Extend_sel ? {{16{Imediate_IF_ID[15]}},Imediate_IF_ID}:{16'h0000,Imediate_IF_ID} ;
 
 endmodule 

@@ -20,6 +20,6 @@
 ../rtl/Shift_Left_2.v
 ../rtl/Sign_extend.v
 ../rtl/adder_32bit.v
-../rtl/Branch_predictor.v
-../rtl/BTB.v
+../rtl/Branch_Prediction.v
+../rtl/Branch_Target_Buffer.v
 ../rtl/Top.v

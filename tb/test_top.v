@@ -72,9 +72,6 @@ module Testbench;
         // Nạp file kết quả chuẩn từ Python
         $readmemh("expected_regs.txt", expected_regs);
         
-        // (Tùy chọn) Nạp chương trình nếu Memory hỗ trợ backdoor load
-        // $readmemh("program.hex", uut.Instruction_mem_uut.mem); 
-        // $readmemh("data.hex", uut.Data_mem_uut.mem);
 
         // --- BƯỚC 2: RESET HỆ THỐNG ---
         $display("[INFO] System Reset...");
@@ -95,8 +92,6 @@ module Testbench;
 
         for (i = 0; i < 32; i = i + 1) begin
             
-            // [QUAN TRỌNG]: Kiểm tra đường dẫn 'uut.Reg_file_uut.mem' 
-            // Đảm bảo tên module instance (Reg_file_uut) và tên mảng (mem) đúng với code của bạn.
             if (uut.Reg_file_uut.mem[i] !== expected_regs[i]) begin
                 
                 $display("[ERROR] Register $%0d Mismatch!", i);

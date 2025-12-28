@@ -28,6 +28,7 @@ output reg [3:0] ALU_Operation
                     endcase
                 
                 end
+                default: ALU_Operation = 4'bxxxx;
          endcase
     end
 endmodule

@@ -12,6 +12,7 @@ FUNCT_SUB = 0x22
 FUNCT_AND = 0x24
 FUNCT_OR  = 0x25
 FUNCT_SLT = 0x2A
+FUNCT_XOR = 0x26  # ← THÊM XOR cho R-type
 
 # I-Type Arithmetic & Control
 OP_ADDI = 0x08
@@ -33,9 +34,20 @@ memory = {}
 pc = 0
 
 def to_signed(val):
+    """Chuyển 32-bit unsigned thành signed"""
     if val & 0x80000000:
         return val - 0x100000000
     return val
+
+def zero_extend_16(val):
+    """Zero-extend 16-bit thành 32-bit"""
+    return val & 0xFFFF
+
+def sign_extend_16(val):
+    """Sign-extend 16-bit thành 32-bit"""
+    if val & 0x8000:
+        return val | 0xFFFF0000
+    return val & 0xFFFF
 
 def run_simulation():
     global pc
@@ -69,9 +81,13 @@ def run_simulation():
         shamt = (instr >> 6) & 0x1F
         funct = instr & 0x3F
         
-        imm = instr & 0xFFFF          # Giá trị gốc 16-bit (Zero Extended)
+        imm_raw = instr & 0xFFFF
+        
+        # Zero Extended (cho ANDI, ORI, XORI)
+        imm_zero = zero_extend_16(imm_raw)
+        
         # Sign Extended (cho ADDI, LW, SW, BEQ)
-        imm_signed = to_signed(imm if (imm & 0x8000) == 0 else imm | 0xFFFF0000)
+        imm_signed = sign_extend_16(imm_raw)
         
         address = instr & 0x03FFFFFF
 
@@ -90,6 +106,8 @@ def run_simulation():
                 regs[rd] = val_rs & val_rt
             elif funct == FUNCT_OR:
                 regs[rd] = val_rs | val_rt
+            elif funct == FUNCT_XOR:  # ← THÊM XOR
+                regs[rd] = val_rs ^ val_rt
             elif funct == FUNCT_SLT:
                 regs[rd] = 1 if to_signed(val_rs) < to_signed(val_rt) else 0
 
@@ -97,13 +115,13 @@ def run_simulation():
         elif opcode == OP_ADDI:
             regs[rt] = (regs[rs] + imm_signed) & 0xFFFFFFFF
 
-        # 3. I-Type Logic (Zero Extended - BỔ SUNG)
+        # 3. I-Type Logic (Zero Extended) - ← SỬA Ở ĐÂY
         elif opcode == OP_ANDI:
-            regs[rt] = (regs[rs] & imm) & 0xFFFFFFFF
+            regs[rt] = (regs[rs] & imm_zero)  # ← Dùng imm_zero
         elif opcode == OP_ORI:
-            regs[rt] = (regs[rs] | imm) & 0xFFFFFFFF
+            regs[rt] = (regs[rs] | imm_zero)  # ← Dùng imm_zero
         elif opcode == OP_XORI:
-            regs[rt] = (regs[rs] ^ imm) & 0xFFFFFFFF
+            regs[rt] = (regs[rs] ^ imm_zero)  # ← SỬA: Dùng imm_zero thay vì imm
 
         # 4. Control Flow
         elif opcode == OP_BEQ:
@@ -115,10 +133,10 @@ def run_simulation():
 
         # 5. Memory
         elif opcode == OP_LW:
-            addr = regs[rs] + imm_signed
+            addr = (regs[rs] + imm_signed) & 0xFFFFFFFF
             regs[rt] = memory.get(addr, 0)
         elif opcode == OP_SW:
-            addr = regs[rs] + imm_signed
+            addr = (regs[rs] + imm_signed) & 0xFFFFFFFF
             memory[addr] = regs[rt]
 
         regs[0] = 0
@@ -132,9 +150,6 @@ def run_simulation():
             for i in range(32):
                 f.write(f"{regs[i]:08x}\n")
         
-        print(f"XONG! Kết quả đã ghi vào '{OUTPUT_FILE}'.")
-        print(f"Kiểm tra nhanh: Register 1 = {regs[1]}, Register 30 = {regs[30]}")
-
     except Exception as e:
         print(f"Lỗi khi ghi file: {e}")
 
