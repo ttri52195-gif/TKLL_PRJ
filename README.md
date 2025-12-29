@@ -41,7 +41,6 @@ Dựa trên mã nguồn trong thư mục `rtl/`:
 | **Branch_Target_Buffer.v** | Bộ nhớ đệm dự đoán địa chỉ đích và hướng nhảy (Saturating Counter). |
 | **Enable_Branch.v** | Logic kiểm tra điều kiện rẽ nhánh thực tế tại giai đoạn MEM. |
 | **ALU_Branch.v** | Tính toán địa chỉ đích của lệnh nhánh. |
-| **Branch_Prediction.v** | *(Module hỗ trợ logic dự đoán - nếu có)*. |
 
 ### 3. Execution & ALU
 | Module | Chức năng |
@@ -56,7 +55,7 @@ Dựa trên mã nguồn trong thư mục `rtl/`:
 ### 4. Memory Units
 | Module | Chức năng |
 | :--- | :--- |
-| **Instruction_mem.v** | Bộ nhớ lệnh (ROM mô phỏng), nạp file hex chương trình. |
+| **Instruction_mem.v** | Bộ nhớ lệnh, nạp file hex chương trình. |
 | **Data_mem.v** | Bộ nhớ dữ liệu (RAM). |
 
 ### 5. Pipeline Registers & Hazards
