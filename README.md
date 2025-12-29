@@ -1,4 +1,4 @@
-# 5-Stage Pipelined MIPS CPU with Dynamic Branch Prediction
+# XÂY DỰNG BỘ XỬ LÝ MIPS 32BIT SỬ DỤNG KỸ THUẬT PIPELINE
 
 ![Verilog](https://img.shields.io/badge/Language-Verilog-blue)
 ![Status](https://img.shields.io/badge/Status-Implementation-orange)
@@ -100,4 +100,5 @@ Dựa trên mã nguồn trong thư mục `rtl/`:
     * Mở GTKWave để debug các tín hiệu quan trọng như `PC`, `Instruction`, `Miss_Prediction`, v.v.
 
 ## 📝 Tác giả
-* **[Tên của bạn]** - *Thiết kế RTL & Verification*
+* **Trần Minh Trí** - *2313626*
+* **Nguyễn Lưu Khánh Trình** - *2313638*
