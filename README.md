@@ -74,6 +74,18 @@ Dựa trên mã nguồn trong thư mục `rtl/`:
 
 ---
 
+## 🛠 Kiến trúc hệ thống (System Architecture)
+
+### 1. Sơ đồ khối tổng quát (Top-level Block Diagram)
+Sơ đồ dưới đây mô tả kết nối giữa CPU, Bộ nhớ lệnh (IM) và Bộ nhớ dữ liệu (DM).
+
+![Top Level Diagram](docs/images/top_level_block.png)
+
+### 2. Thiết kế Datapath chi tiết (Detailed Datapath)
+Chi tiết các đường dữ liệu qua 5 tầng pipeline và khối Forwarding Unit.
+
+![Datapath Design](docs/images/datapath_detailed.png)
+
 ## 🛠 Hướng dẫn chạy mô phỏng (Simulation Guide)
 
 ### Yêu cầu
