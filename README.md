@@ -99,7 +99,6 @@ Chi tiết các đường dữ liệu qua 5 tầng pipeline và khối Forwardin
     * Lưu file kết quả vào `program.hex`. (File này được `Instruction_mem.v` đọc vào).
 
 2.  **Chạy script kiểm thử:**
-    * Vào thư mục `scripts/` (hoặc `sim/` tùy cấu trúc của bạn):
     ```bash
     make run
     ```
